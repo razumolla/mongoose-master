@@ -1,15 +1,16 @@
 //user schema+ model
 
-import { Schema, model } from "mongoose";
-import { IUser } from "./user.interface";
+import { Model, Schema, model } from "mongoose";
+import { IUser, IUserMethods } from "./user.interface";
 
+type UserModel = Model<IUser, {}, IUserMethods>;
 /**
  * 2. Create a Schema corresponding to the document interface.
  * -----------------
  * interface e type small letter use hobe
  * schema te type capital letter use hobe
  */
-const userSchema = new Schema<IUser>({
+const userSchema = new Schema<IUser, UserModel, IUserMethods>({
   id: {
     type: String,
     required: true,
@@ -64,7 +65,16 @@ const userSchema = new Schema<IUser>({
   },
 });
 
+userSchema.method("fullName", function fullName() {
+  return this.name.firstName + " " + this.name.lastName;
+});
+
 //create model
-const User = model<IUser>("User", userSchema);
+const User = model<IUser, UserModel>("User", userSchema);
 
 export default User;
+
+/**
+ * Instance methods --> instance er method
+ * class --> instance + method -> instance methods
+ */
