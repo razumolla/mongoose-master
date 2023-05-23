@@ -20,3 +20,18 @@ export const getUserByIdFromDB = async (
   const user = await User.findOne({ id: payload }, { name: 1, contactNo: 1 });
   return user;
 };
+
+export const getAdminUsersFromDB = async () => {
+  const admins = await User.getAdminUsers();
+  console.log(admins);
+  return admins;
+};
+
+/**
+ * user =new User
+ * user.fullName() //instance method
+ *
+ * ----------
+ * class -> attach ->Method -> Directly call using class
+ * User.getAdminUsers()  //clas
+ */
